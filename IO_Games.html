@@ -161,7 +161,8 @@
             background: rgba(76, 175, 255, 0.1);
             border-radius: 25px;
             color: #fff;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            backdrop-filter: blur(5px);
         }
 
         .search-input::placeholder {
@@ -170,9 +171,10 @@
 
         .search-input:focus {
             outline: none;
-            border-color: rgba(76, 175, 255, 0.8);
+            border-color: rgba(76, 175, 255, 0.9);
             background: rgba(76, 175, 255, 0.15);
-            box-shadow: 0 0 20px rgba(76, 175, 255, 0.3);
+            box-shadow: 0 0 30px rgba(76, 175, 255, 0.5), inset 0 0 10px rgba(76, 175, 255, 0.1);
+            transform: scale(1.03);
         }
 
         .filter-btn {
@@ -182,9 +184,28 @@
             color: #fff;
             border-radius: 25px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
             font-size: 0.9em;
             font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.4s ease;
+            z-index: 0;
+        }
+
+        .filter-btn:hover::before,
+        .filter-btn.active::before {
+            left: 100%;
         }
 
         .filter-btn:hover,
@@ -192,7 +213,7 @@
             background: linear-gradient(135deg, #4cafff 0%, #8a2be2 100%);
             border-color: #fff;
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(76, 175, 255, 0.4);
+            box-shadow: 0 12px 40px rgba(76, 175, 255, 0.5);
         }
 
         .games-grid {
@@ -227,6 +248,15 @@
             flex-direction: column;
             box-shadow: 0 0 20px rgba(76, 175, 255, 0.2), inset 0 0 20px rgba(76, 175, 255, 0.1);
             animation: edgeGlow 3s ease-in-out infinite;
+        }
+
+        .game-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(76, 175, 255, 0.8);
+            box-shadow: 0 20px 60px rgba(76, 175, 255, 0.4), 
+                        0 0 40px rgba(138, 43, 226, 0.3),
+                        inset 0 0 30px rgba(76, 175, 255, 0.2);
+            backdrop-filter: blur(15px);
         }
 
         @keyframes edgeGlow {
@@ -299,6 +329,8 @@
             overflow: hidden;
             background-size: cover;
             background-position: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 -20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .game-header img {
@@ -306,11 +338,13 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            filter: brightness(0.95);
         }
 
         .game-card:hover .game-header img {
-            transform: scale(1.05);
+            transform: scale(1.12) rotate(2deg);
+            filter: brightness(1.1) contrast(1.1);
         }
 
         .game-header::after {
@@ -318,7 +352,7 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.15), transparent);
             animation: shimmer 2s infinite;
             top: 0;
             left: 0;
@@ -342,26 +376,30 @@
             margin-bottom: 10px;
             color: #fff;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, #4cafff, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: all 0.3s ease;
         }
 
-        .game-category {
-            display: inline-block;
-            padding: 5px 12px;
-            background: rgba(76, 175, 255, 0.3);
-            border-radius: 12px;
-            font-size: 0.75em;
-            color: #4cafff;
-            margin-bottom: 15px;
-            width: fit-content;
-            font-weight: 600;
+        .game-card:hover .game-title {
+            text-shadow: 0 4px 15px rgba(76, 175, 255, 0.6);
+            -webkit-text-fill-color: #fff;
+            filter: drop-shadow(0 0 10px rgba(76, 175, 255, 0.8));
         }
 
         .game-description {
             font-size: 0.95em;
             color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
+            line-height: 1.7;
             margin-bottom: 15px;
             flex: 1;
+            transition: color 0.3s ease;
+        }
+
+        .game-card:hover .game-description {
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .game-features {
@@ -382,18 +420,20 @@
         .play-btn {
             padding: 12px 30px;
             background: linear-gradient(135deg, #4cafff 0%, #8a2be2 100%);
-            border: none;
+            border: 2px solid rgba(255, 255, 255, 0.2);
             color: #fff;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             font-weight: 700;
             font-size: 0.95em;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
             position: relative;
             overflow: hidden;
             text-decoration: none;
             display: inline-block;
             text-align: center;
+            box-shadow: 0 6px 20px rgba(76, 175, 255, 0.3);
+            letter-spacing: 0.5px;
         }
 
         .play-btn::before {
@@ -403,8 +443,9 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.3);
-            transition: left 0.3s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+            z-index: 1;
         }
 
         .play-btn:hover::before {
@@ -412,8 +453,14 @@
         }
 
         .play-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(76, 175, 255, 0.6);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(76, 175, 255, 0.7), 0 0 20px rgba(138, 43, 226, 0.5);
+            border-color: rgba(255, 255, 255, 0.4);
+            background: linear-gradient(135deg, #5dbfff 0%, #9a3cdb 100%);
+        }
+
+        .play-btn:active {
+            transform: translateY(-2px);
         }
 
         .game-card:hover {
@@ -530,7 +577,7 @@
 
             <!-- Slither.io -->
             <div class="game-card" data-category="action multiplayer popular classic">
-                <div class="game-header"><img src="https://images.unsplash.com/photo-1611532736579-6b16e2b50449?w=400&h=200&fit=crop" alt="Slither.io" onerror="this.parentElement.innerHTML='🐍'"></div>
+                <div class="game-header">🐍</div>
                 <div class="game-content">
                     <h2 class="game-title">Slither.io</h2>
                     <span class="game-category">Action • Survival</span>
@@ -552,7 +599,7 @@
 
             <!-- Diep.io -->
             <div class="game-card" data-category="action survival popular classic">
-                <div class="game-header"><img src="https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=400&h=200&fit=crop" alt="Diep.io" onerror="this.parentElement.innerHTML='🔫'"></div>
+                <div class="game-header">🎖️</div>
                 <div class="game-content">
                     <h2 class="game-title">Diep.io</h2>
                     <span class="game-category">Action • Strategy</span>
@@ -794,7 +841,7 @@
 
             <!-- Krunker.io -->
             <div class="game-card" data-category="action multiplayer popular hot">
-                <div class="game-header"><img src="https://images.unsplash.com/photo-1538481143235-e06134196fba?w=400&h=200&fit=crop" alt="Krunker.io" onerror="this.parentElement.innerHTML='🎮'"></div>
+                <div class="game-header">💻</div>
                 <div class="game-content">
                     <h2 class="game-title">Krunker.io</h2>
                     <span class="game-category">Action • FPS</span>
@@ -1454,7 +1501,7 @@
 
             <!-- Among Us -->
             <div class="game-card" data-category="strategy multiplayer popular hot">
-                <div class="game-header"><img src="https://images.unsplash.com/photo-1611532736579-6b16e2b50449?w=400&h=200&fit=crop" alt="Among Us" onerror="this.parentElement.innerHTML='👽'"></div>
+                <div class="game-header">👽</div>
                 <div class="game-content">
                     <h2 class="game-title">Among Us</h2>
                     <span class="game-category">Strategy • Party</span>
@@ -1476,7 +1523,7 @@
 
             <!-- Fortnite -->
             <div class="game-card" data-category="action survival popular hot">
-                <div class="game-header"><img src="https://images.unsplash.com/photo-1538481143235-e06134196fba?w=400&h=200&fit=crop" alt="Fortnite" onerror="this.parentElement.innerHTML='🎯'"></div>
+                <div class="game-header">🪂</div>
                 <div class="game-content">
                     <h2 class="game-title">Fortnite</h2>
                     <span class="game-category">Action • Battle Royale</span>
@@ -1498,7 +1545,7 @@
 
             <!-- Roblox -->
             <div class="game-card" data-category="action survival multiplayer popular">
-                <div class="game-header"><img src="https://images.unsplash.com/photo-1535303311046-6cfb3ee9b28f?w=400&h=200&fit=crop" alt="Roblox" onerror="this.parentElement.innerHTML='🎮'"></div>
+                <div class="game-header">🧩</div>
                 <div class="game-content">
                     <h2 class="game-title">Roblox</h2>
                     <span class="game-category">Action • Sandbox</span>
@@ -1520,7 +1567,7 @@
 
             <!-- Minecraft -->
             <div class="game-card" data-category="action survival multiplayer classic">
-                <div class="game-header"><img src="https://images.unsplash.com/photo-1578926314433-d375787b9b9b?w=400&h=200&fit=crop" alt="Minecraft" onerror="this.parentElement.innerHTML='⛏️'"></div>
+                <div class="game-header">🧱</div>
                 <div class="game-content">
                     <h2 class="game-title">Minecraft</h2>
                     <span class="game-category">Survival • Sandbox</span>
@@ -1542,7 +1589,7 @@
 
             <!-- Call of Duty: Warzone -->
             <div class="game-card" data-category="action multiplayer popular hot">
-                <div class="game-header">🔫</div>
+                <div class="game-header">💣</div>
                 <div class="game-content">
                     <h2 class="game-title">Call of Duty: Warzone</h2>
                     <span class="game-category">Action • FPS</span>
@@ -1564,7 +1611,7 @@
 
             <!-- PUBG: Battlegrounds -->
             <div class="game-card" data-category="action survival popular">
-                <div class="game-header">🎖️</div>
+                <div class="game-header">🪂</div>
                 <div class="game-content">
                     <h2 class="game-title">PUBG: Battlegrounds</h2>
                     <span class="game-category">Action • Battle Royale</span>
@@ -1586,7 +1633,7 @@
 
             <!-- Valorant -->
             <div class="game-card" data-category="action multiplayer popular hot">
-                <div class="game-header"><img src="https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=400&h=200&fit=crop" alt="Valorant" onerror="this.parentElement.innerHTML='🎯'"></div>
+                <div class="game-header">🎯</div>
                 <div class="game-content">
                     <h2 class="game-title">Valorant</h2>
                     <span class="game-category">Action • FPS</span>
@@ -1608,7 +1655,7 @@
 
             <!-- League of Legends -->
             <div class="game-card" data-category="strategy multiplayer popular classic">
-                <div class="game-header"><img src="https://images.unsplash.com/photo-1553531088-fde7b2b56e75?w=400&h=200&fit=crop" alt="League of Legends" onerror="this.parentElement.innerHTML='👑'"></div>
+                <div class="game-header">⚔️</div>
                 <div class="game-content">
                     <h2 class="game-title">League of Legends</h2>
                     <span class="game-category">Strategy • MOBA</span>
@@ -1652,7 +1699,7 @@
 
             <!-- Counter-Strike 2 -->
             <div class="game-card" data-category="action multiplayer popular classic">
-                <div class="game-header">💣</div>
+                <div class="game-header">💥</div>
                 <div class="game-content">
                     <h2 class="game-title">Counter-Strike 2</h2>
                     <span class="game-category">Action • FPS</span>
@@ -1674,7 +1721,7 @@
 
             <!-- Apex Legends -->
             <div class="game-card" data-category="action survival popular hot">
-                <div class="game-header">🏃‍♂️</div>
+                <div class="game-header">🏃‍♀️</div>
                 <div class="game-content">
                     <h2 class="game-title">Apex Legends</h2>
                     <span class="game-category">Action • Battle Royale</span>
@@ -1696,7 +1743,7 @@
 
             <!-- Team Fortress 2 -->
             <div class="game-card" data-category="action multiplayer classic">
-                <div class="game-header">🎪</div>
+                <div class="game-header">🎭</div>
                 <div class="game-content">
                     <h2 class="game-title">Team Fortress 2</h2>
                     <span class="game-category">Action • FPS</span>
@@ -1740,7 +1787,7 @@
 
             <!-- Rust -->
             <div class="game-card" data-category="survival action hot">
-                <div class="game-header">⚡</div>
+                <div class="game-header">🔥</div>
                 <div class="game-content">
                     <h2 class="game-title">Rust</h2>
                     <span class="game-category">Survival • Open World</span>
@@ -1762,7 +1809,7 @@
 
             <!-- Genshin Impact -->
             <div class="game-card" data-category="action multiplayer popular hot">
-                <div class="game-header"><img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=400&h=200&fit=crop" alt="Genshin Impact" onerror="this.parentElement.innerHTML='⚔️'"></div>
+                <div class="game-header">✨</div>
                 <div class="game-content">
                     <h2 class="game-title">Genshin Impact</h2>
                     <span class="game-category">Action • RPG</span>
@@ -1784,7 +1831,7 @@
 
             <!-- Final Fantasy XIV -->
             <div class="game-card" data-category="action multiplayer popular">
-                <div class="game-header">✨</div>
+                <div class="game-header">🐉</div>
                 <div class="game-content">
                     <h2 class="game-title">Final Fantasy XIV</h2>
                     <span class="game-category">Action • MMORPG</span>
@@ -1806,7 +1853,7 @@
 
             <!-- World of Warcraft -->
             <div class="game-card" data-category="action multiplayer classic popular">
-                <div class="game-header">🐉</div>
+                <div class="game-header">🏰</div>
                 <div class="game-content">
                     <h2 class="game-title">World of Warcraft</h2>
                     <span class="game-category">Action • MMORPG</span>
@@ -1850,7 +1897,7 @@
 
             <!-- Elden Ring (Multiplayer) -->
             <div class="game-card" data-category="action multiplayer hot">
-                <div class="game-header">⚔️</div>
+                <div class="game-header">👑</div>
                 <div class="game-content">
                     <h2 class="game-title">Elden Ring</h2>
                     <span class="game-category">Action • RPG</span>
@@ -1894,7 +1941,7 @@
 
             <!-- Clash Royale -->
             <div class="game-card" data-category="strategy multiplayer popular">
-                <div class="game-header">👑</div>
+                <div class="game-header">💎</div>
                 <div class="game-content">
                     <h2 class="game-title">Clash Royale</h2>
                     <span class="game-category">Strategy • Mobile</span>
@@ -1916,7 +1963,7 @@
 
             <!-- Clash of Clans -->
             <div class="game-card" data-category="strategy multiplayer classic">
-                <div class="game-header">🏰</div>
+                <div class="game-header">🏯</div>
                 <div class="game-content">
                     <h2 class="game-title">Clash of Clans</h2>
                     <span class="game-category">Strategy • Base Building</span>
