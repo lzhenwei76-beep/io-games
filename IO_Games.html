@@ -225,6 +225,46 @@
             height: 100%;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 0 20px rgba(76, 175, 255, 0.2), inset 0 0 20px rgba(76, 175, 255, 0.1);
+            animation: edgeGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes edgeGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(76, 175, 255, 0.2), inset 0 0 20px rgba(76, 175, 255, 0.1); }
+            50% { box-shadow: 0 0 30px rgba(76, 175, 255, 0.4), inset 0 0 25px rgba(76, 175, 255, 0.15); }
+        }
+
+        .game-card[data-category*="hot"] {
+            border-color: rgba(255, 107, 107, 0.5);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.3), inset 0 0 20px rgba(255, 107, 107, 0.1);
+            animation: hotEdgeGlow 2.5s ease-in-out infinite;
+        }
+
+        @keyframes hotEdgeGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.3), inset 0 0 20px rgba(255, 107, 107, 0.1); }
+            50% { box-shadow: 0 0 35px rgba(255, 107, 107, 0.5), inset 0 0 25px rgba(255, 107, 107, 0.2); }
+        }
+
+        .game-card[data-category*="popular"] {
+            border-color: rgba(255, 193, 7, 0.5);
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.25), inset 0 0 20px rgba(255, 193, 7, 0.1);
+            animation: popularEdgeGlow 2.8s ease-in-out infinite;
+        }
+
+        @keyframes popularEdgeGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 193, 7, 0.25), inset 0 0 20px rgba(255, 193, 7, 0.1); }
+            50% { box-shadow: 0 0 32px rgba(255, 193, 7, 0.4), inset 0 0 25px rgba(255, 193, 7, 0.15); }
+        }
+
+        .game-card[data-category*="classic"] {
+            border-color: rgba(138, 43, 226, 0.5);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.25), inset 0 0 20px rgba(138, 43, 226, 0.1);
+            animation: classicEdgeGlow 3.2s ease-in-out infinite;
+        }
+
+        @keyframes classicEdgeGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(138, 43, 226, 0.25), inset 0 0 20px rgba(138, 43, 226, 0.1); }
+            50% { box-shadow: 0 0 30px rgba(138, 43, 226, 0.4), inset 0 0 25px rgba(138, 43, 226, 0.15); }
         }
 
         .game-card::before {
@@ -257,6 +297,20 @@
             justify-content: center;
             font-size: 80px;
             overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .game-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.3s ease;
+        }
+
+        .game-card:hover .game-header img {
+            transform: scale(1.05);
         }
 
         .game-header::after {
@@ -266,6 +320,8 @@
             height: 100%;
             background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             animation: shimmer 2s infinite;
+            top: 0;
+            left: 0;
         }
 
         @keyframes shimmer {
@@ -440,6 +496,9 @@
 
         <div class="filter-buttons">
             <button class="filter-btn active" onclick="filterGames('all')">All Games</button>
+            <button class="filter-btn" onclick="filterGames('popular')">🔥 Popular</button>
+            <button class="filter-btn" onclick="filterGames('hot')">⚡ Hot</button>
+            <button class="filter-btn" onclick="filterGames('classic')">⭐ Classic</button>
             <button class="filter-btn" onclick="filterGames('action')">Action</button>
             <button class="filter-btn" onclick="filterGames('survival')">Survival</button>
             <button class="filter-btn" onclick="filterGames('strategy')">Strategy</button>
@@ -448,8 +507,8 @@
 
         <div class="games-grid" id="gamesGrid">
             <!-- Agar.io -->
-            <div class="game-card" data-category="action multiplayer">
-                <div class="game-header">🟢</div>
+            <div class="game-card" data-category="action multiplayer popular classic">
+                <div class="game-header"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1113700/header.jpg" alt="Agar.io" onerror="this.parentElement.innerHTML='🟢'"></div>
                 <div class="game-content">
                     <h2 class="game-title">Agar.io</h2>
                     <span class="game-category">Action • Survival</span>
@@ -470,8 +529,8 @@
             </div>
 
             <!-- Slither.io -->
-            <div class="game-card" data-category="action multiplayer">
-                <div class="game-header">🐍</div>
+            <div class="game-card" data-category="action multiplayer popular classic">
+                <div class="game-header"><img src="https://images.unsplash.com/photo-1611532736579-6b16e2b50449?w=400&h=200&fit=crop" alt="Slither.io" onerror="this.parentElement.innerHTML='🐍'"></div>
                 <div class="game-content">
                     <h2 class="game-title">Slither.io</h2>
                     <span class="game-category">Action • Survival</span>
@@ -492,8 +551,8 @@
             </div>
 
             <!-- Diep.io -->
-            <div class="game-card" data-category="action survival">
-                <div class="game-header">🔫</div>
+            <div class="game-card" data-category="action survival popular classic">
+                <div class="game-header"><img src="https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=400&h=200&fit=crop" alt="Diep.io" onerror="this.parentElement.innerHTML='🔫'"></div>
                 <div class="game-content">
                     <h2 class="game-title">Diep.io</h2>
                     <span class="game-category">Action • Strategy</span>
@@ -536,7 +595,7 @@
             </div>
 
             <!-- Splix.io -->
-            <div class="game-card" data-category="strategy multiplayer">
+            <div class="game-card" data-category="strategy multiplayer classic">
                 <div class="game-header">🟥</div>
                 <div class="game-content">
                     <h2 class="game-title">Splix.io</h2>
@@ -602,7 +661,7 @@
             </div>
 
             <!-- Mope.io -->
-            <div class="game-card" data-category="action survival">
+            <div class="game-card" data-category="action survival popular classic">
                 <div class="game-header">🐄</div>
                 <div class="game-content">
                     <h2 class="game-title">Mope.io</h2>
@@ -624,7 +683,7 @@
             </div>
 
             <!-- Paper.io -->
-            <div class="game-card" data-category="strategy multiplayer">
+            <div class="game-card" data-category="strategy multiplayer classic">
                 <div class="game-header">📄</div>
                 <div class="game-content">
                     <h2 class="game-title">Paper.io</h2>
@@ -712,7 +771,7 @@
             </div>
 
             <!-- Tanki Online -->
-            <div class="game-card" data-category="action multiplayer">
+            <div class="game-card" data-category="action multiplayer popular classic">
                 <div class="game-header">🎖️</div>
                 <div class="game-content">
                     <h2 class="game-title">Tanki Online</h2>
@@ -734,8 +793,8 @@
             </div>
 
             <!-- Krunker.io -->
-            <div class="game-card" data-category="action multiplayer">
-                <div class="game-header">🎮</div>
+            <div class="game-card" data-category="action multiplayer popular hot">
+                <div class="game-header"><img src="https://images.unsplash.com/photo-1538481143235-e06134196fba?w=400&h=200&fit=crop" alt="Krunker.io" onerror="this.parentElement.innerHTML='🎮'"></div>
                 <div class="game-content">
                     <h2 class="game-title">Krunker.io</h2>
                     <span class="game-category">Action • FPS</span>
@@ -756,7 +815,7 @@
             </div>
 
             <!-- Deeeep.io -->
-            <div class="game-card" data-category="action survival">
+            <div class="game-card" data-category="action survival popular classic">
                 <div class="game-header">🐋</div>
                 <div class="game-content">
                     <h2 class="game-title">Deeeep.io</h2>
@@ -778,7 +837,7 @@
             </div>
 
             <!-- Surviv.io -->
-            <div class="game-card" data-category="action survival">
+            <div class="game-card" data-category="action survival popular">
                 <div class="game-header">💀</div>
                 <div class="game-content">
                     <h2 class="game-title">Surviv.io</h2>
@@ -954,7 +1013,7 @@
             </div>
 
             <!-- Skribbl.io -->
-            <div class="game-card" data-category="strategy multiplayer">
+            <div class="game-card" data-category="strategy multiplayer popular classic">
                 <div class="game-header">🎨</div>
                 <div class="game-content">
                     <h2 class="game-title">Skribbl.io</h2>
@@ -1042,7 +1101,7 @@
             </div>
 
             <!-- Hole.io -->
-            <div class="game-card" data-category="action multiplayer">
+            <div class="game-card" data-category="action multiplayer hot popular">
                 <div class="game-header">🕳️</div>
                 <div class="game-content">
                     <h2 class="game-title">Hole.io</h2>
@@ -1064,7 +1123,7 @@
             </div>
 
             <!-- Shell Shockers -->
-            <div class="game-card" data-category="action multiplayer">
+            <div class="game-card" data-category="action multiplayer popular hot">
                 <div class="game-header">🥚</div>
                 <div class="game-content">
                     <h2 class="game-title">Shell Shockers</h2>
@@ -1086,7 +1145,7 @@
             </div>
 
             <!-- Bonk.io -->
-            <div class="game-card" data-category="action multiplayer">
+            <div class="game-card" data-category="action multiplayer hot popular">
                 <div class="game-header">🔨</div>
                 <div class="game-content">
                     <h2 class="game-title">Bonk.io</h2>
@@ -1196,7 +1255,7 @@
             </div>
 
             <!-- Tetr.io -->
-            <div class="game-card" data-category="strategy multiplayer">
+            <div class="game-card" data-category="strategy multiplayer hot popular">
                 <div class="game-header">🧩</div>
                 <div class="game-content">
                     <h2 class="game-title">Tetr.io</h2>
@@ -1218,7 +1277,7 @@
             </div>
 
             <!-- Superhero.io -->
-            <div class="game-card" data-category="action multiplayer">
+            <div class="game-card" data-category="action multiplayer hot">
                 <div class="game-header">🦸‍♂️</div>
                 <div class="game-content">
                     <h2 class="game-title">Superhero.io</h2>
@@ -1240,7 +1299,7 @@
             </div>
 
             <!-- Voxel Royale -->
-            <div class="game-card" data-category="action survival">
+            <div class="game-card" data-category="action survival hot">
                 <div class="game-header">🎮</div>
                 <div class="game-content">
                     <h2 class="game-title">Voxel Royale</h2>
@@ -1284,7 +1343,7 @@
             </div>
 
             <!-- Gartic Phone -->
-            <div class="game-card" data-category="strategy multiplayer">
+            <div class="game-card" data-category="strategy multiplayer hot popular">
                 <div class="game-header">📱</div>
                 <div class="game-content">
                     <h2 class="game-title">Gartic Phone</h2>
@@ -1392,6 +1451,534 @@
                     <button class="play-btn">Play Now</button>
                 </div>
             </div>
+
+            <!-- Among Us -->
+            <div class="game-card" data-category="strategy multiplayer popular hot">
+                <div class="game-header"><img src="https://images.unsplash.com/photo-1611532736579-6b16e2b50449?w=400&h=200&fit=crop" alt="Among Us" onerror="this.parentElement.innerHTML='👽'"></div>
+                <div class="game-content">
+                    <h2 class="game-title">Among Us</h2>
+                    <span class="game-category">Strategy • Party</span>
+                    <p class="game-description">
+                        Work together to complete tasks, but imposters are sabotaging! Discuss and vote to eliminate the traitors before they eliminate you!
+                    </p>
+                    <div class="game-features">
+                        <span>Social</span>
+                        <span>Deception</span>
+                        <span>Team Play</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Fortnite -->
+            <div class="game-card" data-category="action survival popular hot">
+                <div class="game-header"><img src="https://images.unsplash.com/photo-1538481143235-e06134196fba?w=400&h=200&fit=crop" alt="Fortnite" onerror="this.parentElement.innerHTML='🎯'"></div>
+                <div class="game-content">
+                    <h2 class="game-title">Fortnite</h2>
+                    <span class="game-category">Action • Battle Royale</span>
+                    <p class="game-description">
+                        Land on an island, gather resources, build structures, and battle 100 players. Last one standing wins! Free-to-play sensation with constant updates.
+                    </p>
+                    <div class="game-features">
+                        <span>Building</span>
+                        <span>Battle Royale</span>
+                        <span>Cross-Platform</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Roblox -->
+            <div class="game-card" data-category="action survival multiplayer popular">
+                <div class="game-header"><img src="https://images.unsplash.com/photo-1535303311046-6cfb3ee9b28f?w=400&h=200&fit=crop" alt="Roblox" onerror="this.parentElement.innerHTML='🎮'"></div>
+                <div class="game-content">
+                    <h2 class="game-title">Roblox</h2>
+                    <span class="game-category">Action • Sandbox</span>
+                    <p class="game-description">
+                        Create and play millions of player-made games! From tycoons to FPS, RPGs to parkour - endless possibilities in one platform.
+                    </p>
+                    <div class="game-features">
+                        <span>User-Created</span>
+                        <span>Sandbox</span>
+                        <span>Infinite Games</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Minecraft -->
+            <div class="game-card" data-category="action survival multiplayer classic">
+                <div class="game-header"><img src="https://images.unsplash.com/photo-1578926314433-d375787b9b9b?w=400&h=200&fit=crop" alt="Minecraft" onerror="this.parentElement.innerHTML='⛏️'"></div>
+                <div class="game-content">
+                    <h2 class="game-title">Minecraft</h2>
+                    <span class="game-category">Survival • Sandbox</span>
+                    <p class="game-description">
+                        Build, explore, and survive in infinite blocky worlds. Create anything imaginable or challenge yourself in adventure mode!
+                    </p>
+                    <div class="game-features">
+                        <span>Block Building</span>
+                        <span>Creative</span>
+                        <span>Survival Mode</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Call of Duty: Warzone -->
+            <div class="game-card" data-category="action multiplayer popular hot">
+                <div class="game-header">🔫</div>
+                <div class="game-content">
+                    <h2 class="game-title">Call of Duty: Warzone</h2>
+                    <span class="game-category">Action • FPS</span>
+                    <p class="game-description">
+                        High-octane battle royale with realistic gunplay. Squad up with friends and engage in intense tactical combat across vast maps!
+                    </p>
+                    <div class="game-features">
+                        <span>Realistic FPS</span>
+                        <span>Squad Play</span>
+                        <span>Battle Royale</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- PUBG: Battlegrounds -->
+            <div class="game-card" data-category="action survival popular">
+                <div class="game-header">🎖️</div>
+                <div class="game-content">
+                    <h2 class="game-title">PUBG: Battlegrounds</h2>
+                    <span class="game-category">Action • Battle Royale</span>
+                    <p class="game-description">
+                        The game that started it all! Parachute into battle with 99 others, loot weapons, and outlast everyone. Now free-to-play!
+                    </p>
+                    <div class="game-features">
+                        <span>Original BR</span>
+                        <span>Tactical</span>
+                        <span>Realistic</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Valorant -->
+            <div class="game-card" data-category="action multiplayer popular hot">
+                <div class="game-header"><img src="https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=400&h=200&fit=crop" alt="Valorant" onerror="this.parentElement.innerHTML='🎯'"></div>
+                <div class="game-content">
+                    <h2 class="game-title">Valorant</h2>
+                    <span class="game-category">Action • FPS</span>
+                    <p class="game-description">
+                        5v5 tactical hero shooter with precise gunplay. Choose your agent, use abilities strategically, and dominate competitive ranked matches!
+                    </p>
+                    <div class="game-features">
+                        <span>Tactical FPS</span>
+                        <span>Hero Abilities</span>
+                        <span>Competitive</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- League of Legends -->
+            <div class="game-card" data-category="strategy multiplayer popular classic">
+                <div class="game-header"><img src="https://images.unsplash.com/photo-1553531088-fde7b2b56e75?w=400&h=200&fit=crop" alt="League of Legends" onerror="this.parentElement.innerHTML='👑'"></div>
+                <div class="game-content">
+                    <h2 class="game-title">League of Legends</h2>
+                    <span class="game-category">Strategy • MOBA</span>
+                    <p class="game-description">
+                        The world's most popular MOBA! Pick a champion, level up, and work with 4 teammates to destroy the enemy nexus. Skill and teamwork required!
+                    </p>
+                    <div class="game-features">
+                        <span>MOBA</span>
+                        <span>5v5 Teams</span>
+                        <span>Esports</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Dota 2 -->
+            <div class="game-card" data-category="strategy multiplayer popular classic">
+                <div class="game-header">🔮</div>
+                <div class="game-content">
+                    <h2 class="game-title">Dota 2</h2>
+                    <span class="game-category">Strategy • MOBA</span>
+                    <p class="game-description">
+                        Free-to-play MOBA masterpiece! Pick from 120+ heroes with unique abilities. Destroy the enemy Ancient with your team in intense strategic battles!
+                    </p>
+                    <div class="game-features">
+                        <span>MOBA</span>
+                        <span>Complex Heroes</span>
+                        <span>Free</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Counter-Strike 2 -->
+            <div class="game-card" data-category="action multiplayer popular classic">
+                <div class="game-header">💣</div>
+                <div class="game-content">
+                    <h2 class="game-title">Counter-Strike 2</h2>
+                    <span class="game-category">Action • FPS</span>
+                    <p class="game-description">
+                        The legendary tactical FPS! Terrorists vs Counter-Terrorists in intense 5v5 matches. Legendary competitive shooter with a massive esports scene!
+                    </p>
+                    <div class="game-features">
+                        <span>Tactical FPS</span>
+                        <span>Economy System</span>
+                        <span>Esports</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Apex Legends -->
+            <div class="game-card" data-category="action survival popular hot">
+                <div class="game-header">🏃‍♂️</div>
+                <div class="game-content">
+                    <h2 class="game-title">Apex Legends</h2>
+                    <span class="game-category">Action • Battle Royale</span>
+                    <p class="game-description">
+                        Legend-based battle royale with unique abilities! Squad-focused gameplay with ping system. Fast-paced combat and legendary heroes!
+                    </p>
+                    <div class="game-features">
+                        <span>Legend Heroes</span>
+                        <span>Squad Based</span>
+                        <span>Fast Pace</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Team Fortress 2 -->
+            <div class="game-card" data-category="action multiplayer classic">
+                <div class="game-header">🎪</div>
+                <div class="game-content">
+                    <h2 class="game-title">Team Fortress 2</h2>
+                    <span class="game-category">Action • FPS</span>
+                    <p class="game-description">
+                        Free-to-play class-based FPS with humor and heart! 9 diverse classes, endless game modes, and a thriving community. Pure gaming fun!
+                    </p>
+                    <div class="game-features">
+                        <span>9 Classes</span>
+                        <span>Free-to-Play</span>
+                        <span>Humorous</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Overwatch 2 -->
+            <div class="game-card" data-category="action multiplayer popular hot">
+                <div class="game-header">🛡️</div>
+                <div class="game-content">
+                    <h2 class="game-title">Overwatch 2</h2>
+                    <span class="game-category">Action • Hero Shooter</span>
+                    <p class="game-description">
+                        5v5 team-based hero shooter! Play diverse heroes with unique abilities. Objective-focused gameplay with beautiful maps and competitive ranked!
+                    </p>
+                    <div class="game-features">
+                        <span>Team Play</span>
+                        <span>Heroes</span>
+                        <span>Objective</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Rust -->
+            <div class="game-card" data-category="survival action hot">
+                <div class="game-header">⚡</div>
+                <div class="game-content">
+                    <h2 class="game-title">Rust</h2>
+                    <span class="game-category">Survival • Open World</span>
+                    <p class="game-description">
+                        Brutal survival game where you must gather resources, build bases, and survive against players and nature. PvP chaos at its finest!
+                    </p>
+                    <div class="game-features">
+                        <span>Hardcore PvP</span>
+                        <span>Base Building</span>
+                        <span>Brutal Survival</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Genshin Impact -->
+            <div class="game-card" data-category="action multiplayer popular hot">
+                <div class="game-header"><img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=400&h=200&fit=crop" alt="Genshin Impact" onerror="this.parentElement.innerHTML='⚔️'"></div>
+                <div class="game-content">
+                    <h2 class="game-title">Genshin Impact</h2>
+                    <span class="game-category">Action • RPG</span>
+                    <p class="game-description">
+                        Beautiful open-world action RPG with elemental combat! Explore Teyvat, master 50+ characters, and enjoy gorgeous landscapes. Cross-platform!
+                    </p>
+                    <div class="game-features">
+                        <span>Open World</span>
+                        <span>Gacha</span>
+                        <span>Beautiful Graphics</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Final Fantasy XIV -->
+            <div class="game-card" data-category="action multiplayer popular">
+                <div class="game-header">✨</div>
+                <div class="game-content">
+                    <h2 class="game-title">Final Fantasy XIV</h2>
+                    <span class="game-category">Action • MMORPG</span>
+                    <p class="game-description">
+                        Critically acclaimed MMORPG with incredible story! Join millions in epic raids, dungeons, and explore the realm of Eorzea with friends!
+                    </p>
+                    <div class="game-features">
+                        <span>MMORPG</span>
+                        <span>Story-Rich</span>
+                        <span>Endgame Content</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- World of Warcraft -->
+            <div class="game-card" data-category="action multiplayer classic popular">
+                <div class="game-header">🐉</div>
+                <div class="game-content">
+                    <h2 class="game-title">World of Warcraft</h2>
+                    <span class="game-category">Action • MMORPG</span>
+                    <p class="game-description">
+                        The legendary MMORPG! Explore Azeroth, raid dungeons, PvP, and make lasting friendships in the most iconic MMO ever created!
+                    </p>
+                    <div class="game-features">
+                        <span>MMORPG</span>
+                        <span>Raids</span>
+                        <span>PvP</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Lost Ark -->
+            <div class="game-card" data-category="action multiplayer hot">
+                <div class="game-header">🗺️</div>
+                <div class="game-content">
+                    <h2 class="game-title">Lost Ark</h2>
+                    <span class="game-category">Action • MMORPG</span>
+                    <p class="game-description">
+                        Isometric MMORPG with fast-paced action! Explore treasures, raid dungeons, and engage in PvP battles. Free-to-play with gorgeous Korean MMO feel!
+                    </p>
+                    <div class="game-features">
+                        <span>Isometric</span>
+                        <span>Action Combat</span>
+                        <span>Raids</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Elden Ring (Multiplayer) -->
+            <div class="game-card" data-category="action multiplayer hot">
+                <div class="game-header">⚔️</div>
+                <div class="game-content">
+                    <h2 class="game-title">Elden Ring</h2>
+                    <span class="game-category">Action • RPG</span>
+                    <p class="game-description">
+                        Dark Souls-like action RPG with multiplayer! Explore the Lands Between solo or with friends. Challenging combat and stunning open world!
+                    </p>
+                    <div class="game-features">
+                        <span>Open World</span>
+                        <span>Souls-like</span>
+                        <span>Multiplayer</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Brawl Stars -->
+            <div class="game-card" data-category="action multiplayer popular">
+                <div class="game-header">⭐</div>
+                <div class="game-content">
+                    <h2 class="game-title">Brawl Stars</h2>
+                    <span class="game-category">Action • Mobile</span>
+                    <p class="game-description">
+                        Fast-paced 3v3 team battles with unique brawlers! Unlock 60+ characters, complete quests, and climb the competitive ladder. Mobile gaming at its best!
+                    </p>
+                    <div class="game-features">
+                        <span>3v3 PvP</span>
+                        <span>Mobile</span>
+                        <span>Unique Brawlers</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Clash Royale -->
+            <div class="game-card" data-category="strategy multiplayer popular">
+                <div class="game-header">👑</div>
+                <div class="game-content">
+                    <h2 class="game-title">Clash Royale</h2>
+                    <span class="game-category">Strategy • Mobile</span>
+                    <p class="game-description">
+                        Collectible card game meets strategy! Build decks of troops and spells, battle in 1v1 duels, and climb to the top of the ladder. Supercell's masterpiece!
+                    </p>
+                    <div class="game-features">
+                        <span>Card Game</span>
+                        <span>Real-time</span>
+                        <span>Strategy</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Clash of Clans -->
+            <div class="game-card" data-category="strategy multiplayer classic">
+                <div class="game-header">🏰</div>
+                <div class="game-content">
+                    <h2 class="game-title">Clash of Clans</h2>
+                    <span class="game-category">Strategy • Base Building</span>
+                    <p class="game-description">
+                        Build your village, train troops, and raid enemies! Join a clan, participate in wars, and become a legendary clan leader. The original mobile strategy game!
+                    </p>
+                    <div class="game-features">
+                        <span>Base Building</span>
+                        <span>Clan Wars</span>
+                        <span>Strategy</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Destiny 2 -->
+            <div class="game-card" data-category="action multiplayer popular">
+                <div class="game-header">🌟</div>
+                <div class="game-content">
+                    <h2 class="game-title">Destiny 2</h2>
+                    <span class="game-category">Action • Shooter</span>
+                    <p class="game-description">
+                        Sci-fi MMO shooter! Team up with Guardians for PvP and PvE content. Raid dungeons, strike missions, and compete in crucible matches. Free-to-play!
+                    </p>
+                    <div class="game-features">
+                        <span>MMO Shooter</span>
+                        <span>Raids</span>
+                        <span>PvP</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+
+            <!-- New World -->
+            <div class="game-card" data-category="action multiplayer hot">
+                <div class="game-header">🗡️</div>
+                <div class="game-content">
+                    <h2 class="game-title">New World</h2>
+                    <span class="game-category">Action • MMORPG</span>
+                    <p class="game-description">
+                        Amazon's action MMORPG! Explore mystical lands, join factions, control territories. PvP-focused MMO with beautiful graphics and fast combat!
+                    </p>
+                    <div class="game-features">
+                        <span>MMORPG</span>
+                        <span>Faction War</span>
+                        <span>PvP</span>
+                    </div>
+                    <div class="players-online">
+                        <div class="online-indicator"></div>
+                        <span>Loading...</span>
+                    </div>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1446,7 +2033,31 @@
             'Oslash.io': { min: 2500, max: 7000, description: 'Sword battles' },
             'Poppy Playtime': { min: 2000, max: 6000, description: 'Horror puzzle' },
             'Friday Night Funkin': { min: 3000, max: 8000, description: 'Rhythm battle' },
-            'Combat Master': { min: 3000, max: 9000, description: 'Fighting arena' }
+            'Combat Master': { min: 3000, max: 9000, description: 'Fighting arena' },
+            'Among Us': { min: 50000, max: 150000, description: 'Social party game' },
+            'Fortnite': { min: 200000, max: 500000, description: 'Most popular BR' },
+            'Roblox': { min: 250000, max: 600000, description: 'Platform' },
+            'Minecraft': { min: 150000, max: 400000, description: 'Sandbox' },
+            'Call of Duty: Warzone': { min: 100000, max: 300000, description: 'FPS BR' },
+            'PUBG: Battlegrounds': { min: 80000, max: 250000, description: 'Original BR' },
+            'Valorant': { min: 120000, max: 350000, description: 'Tactical FPS' },
+            'League of Legends': { min: 180000, max: 500000, description: 'MOBA' },
+            'Dota 2': { min: 100000, max: 300000, description: 'Complex MOBA' },
+            'Counter-Strike 2': { min: 150000, max: 400000, description: 'Legendary FPS' },
+            'Apex Legends': { min: 90000, max: 250000, description: 'Hero BR' },
+            'Team Fortress 2': { min: 50000, max: 150000, description: 'Classic FPS' },
+            'Overwatch 2': { min: 110000, max: 300000, description: 'Hero shooter' },
+            'Rust': { min: 70000, max: 200000, description: 'Survival PvP' },
+            'Genshin Impact': { min: 200000, max: 500000, description: 'Open world RPG' },
+            'Final Fantasy XIV': { min: 130000, max: 350000, description: 'MMORPG' },
+            'World of Warcraft': { min: 120000, max: 320000, description: 'Classic MMORPG' },
+            'Lost Ark': { min: 90000, max: 250000, description: 'Isometric MMO' },
+            'Elden Ring': { min: 80000, max: 220000, description: 'Souls-like' },
+            'Brawl Stars': { min: 100000, max: 280000, description: 'Mobile PvP' },
+            'Clash Royale': { min: 140000, max: 380000, description: 'Card game' },
+            'Clash of Clans': { min: 130000, max: 350000, description: 'Base building' },
+            'Destiny 2': { min: 110000, max: 300000, description: 'Sci-fi MMO' },
+            'New World': { min: 75000, max: 200000, description: 'MMORPG' }
         };
 
         // Generate realistic player count for each game
@@ -1657,7 +2268,31 @@
                     'Oslash.io': 'https://oslash.io',
                     'Poppy Playtime': 'https://poppyplaytime.io',
                     'Friday Night Funkin': 'https://fnf.io',
-                    'Combat Master': 'https://combatmaster.io'
+                    'Combat Master': 'https://combatmaster.io',
+                    'Among Us': 'https://www.innersloth.com/games/among-us',
+                    'Fortnite': 'https://www.fortnite.com',
+                    'Roblox': 'https://www.roblox.com',
+                    'Minecraft': 'https://www.minecraft.net',
+                    'Call of Duty: Warzone': 'https://www.callofduty.com/warzone',
+                    'PUBG: Battlegrounds': 'https://pubg.com',
+                    'Valorant': 'https://playvalorant.com',
+                    'League of Legends': 'https://www.leagueoflegends.com',
+                    'Dota 2': 'https://www.dota2.com',
+                    'Counter-Strike 2': 'https://www.counter-strike.net',
+                    'Apex Legends': 'https://www.ea.com/games/apex',
+                    'Team Fortress 2': 'https://www.teamfortress.com',
+                    'Overwatch 2': 'https://overwatch.blizzard.com',
+                    'Rust': 'https://rust.facepunch.com',
+                    'Genshin Impact': 'https://genshin.hoyoverse.com',
+                    'Final Fantasy XIV': 'https://www.finalfantasyxiv.com',
+                    'World of Warcraft': 'https://worldofwarcraft.blizzard.com',
+                    'Lost Ark': 'https://www.playlostark.com',
+                    'Elden Ring': 'https://www.eldenring.com',
+                    'Brawl Stars': 'https://brawlstars.com',
+                    'Clash Royale': 'https://clashroyale.com',
+                    'Clash of Clans': 'https://clashofclans.com',
+                    'Destiny 2': 'https://www.bungie.net/en/Destiny/Buy',
+                    'New World': 'https://www.newworld.com'
                 };
 
                 if (gameUrls[gameTitle]) {
